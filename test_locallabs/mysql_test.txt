@@ -1,14 +1,26 @@
 #Query1
-select product_name,product_img_url,product_url,product_price_min,product_short_description from grommet_products p join grommet_product_categories pc on p.id = pc.product_id join grommet_gifts_categories c on c.id = 
-pc.product_category_id 
-where c.sub_category = 'Jewelry' and p.is_sold_out = 0;
+select product_name,product_img_url,product_url,product_price_min,product_short_description
+ from grommet_products p join grommet_product_categories pc
+ on p.id = pc.product_id join grommet_gifts_categories c
+ on c.id = pc.product_category_id
+ where c.sub_category = 'Jewelry' and p.is_sold_out = 0;
 
 #Query2
-select product_name,product_img_url,product_url,product_price_min,product_short_description from grommet_products p join grommet_product_to_keyword pk on p.id = pk.product_id join grommet_product_keywords k on k.id = pk.keyword_id where 
-k.keyword = 'Hair accessor' and p.is_sold_out = 0;
+select product_name,product_img_url,product_url,product_price_min,product_short_description
+ from grommet_products p join grommet_product_to_keyword pk
+ on p.id = pk.product_id join grommet_product_keywords k
+ on k.id = pk.keyword_id
+ where k.keyword = 'Hair accessor' and p.is_sold_out = 0;
 
 #Query3
-select product_name,product_img_url,product_url,product_price_min,product_short_description from grommet_products p  join grommet_product_to_keyword pk on p.id = pk.product_id join grommet_product_keywords k on k.id = pk.keyword_id where 
-k.keyword='Aromatherapy' UNION select product_name,product_img_url,product_url,product_price_min,product_short_description from grommet_products p join grommet_product_categories pc on p.id = pc.product_id join grommet_gifts_categories c 
-on c.id = pc.product_category_id  where (c.sub_category = 'Beauty & Personal Care' OR c.sub_category = 'Skincare');
-
+select product_name,product_img_url,product_url,product_price_min,product_short_description
+ from grommet_products p  join grommet_product_to_keyword pk
+ on p.id = pk.product_id join grommet_product_keywords k
+ on k.id = pk.keyword_id
+ where k.keyword='Aromatherapy' and is_sold_out=0
+UNION ALL
+select product_name,product_img_url,product_url,product_price_min,product_short_description
+  from grommet_products p join grommet_product_categories pc
+  on p.id = pc.product_id join grommet_gifts_categories c
+  on c.id = pc.product_category_id
+  where (c.sub_category = 'Beauty & Personal Care' OR c.sub_category = 'Skincare' and is_sold_out=0);
